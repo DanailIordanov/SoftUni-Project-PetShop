@@ -1,0 +1,22 @@
+﻿@model PetShopApplication.Models.Buying.BuyPetModel
+
+@{
+    ViewBag.Title = "Buying pet.";
+}
+
+<h3 class="text-center">Are you sure you want to buy @Model.PetName?</h3>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 mt-60">
+        <img src="@Model.ImageUrl" class="img-responsive" />
+    </div>
+</div>
+<p class="text-center lead mt-60">@Model.Price BGN</p>
+
+@using (Html.BeginForm("Buy", "Pets", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.PetId)
+    <div class="text-center">
+        <input type="submit" value="Accept" class="btn btn-success"/>
+        <a href="/Pets/Details/@Model.PetId" class="btn btn-danger">Decline</a>
+    </div>
+}

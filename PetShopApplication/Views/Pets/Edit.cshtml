@@ -1,0 +1,24 @@
+﻿@model PetShopApplication.Models.Pets.EditPetModel
+
+@{ 
+    ViewBag.Title = "Edit Pet Article";
+}
+
+@using (Html.BeginForm("Edit", "Pets", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.OwnerId)
+
+    @Html.EditorForModel()
+    <div>
+        @Html.LabelFor(m => m.Coat)
+    </div>
+    <div>
+        @Html.EnumDropDownListFor(m => m.Coat);
+    </div>
+    <br />
+    <div>
+        <input type="submit" value="Edit" class="btn btn-success" />
+        <a href="/Pets/Details/@Model.Id" class="btn btn-default">Cancel</a>
+    </div>
+}

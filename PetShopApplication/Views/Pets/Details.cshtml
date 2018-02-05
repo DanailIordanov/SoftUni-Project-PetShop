@@ -1,0 +1,49 @@
+﻿@model PetShopApplication.Models.Pets.DetailsPetModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@if (Model.IsBought)
+{
+    <h2 class="text-center text-warning">This pet is already bought.</h2>
+}
+
+<div class="row mt-60">
+    <div class="col-md-4">
+        <img src="@Model.ImageUrl" class="img-responsive" />
+    </div>
+    <div class="col-md-6">
+        <h2>@Model.Name, @Model.Age year(s) old.</h2>
+        <h3>@Model.AnimalType - @Model.Breed (@Model.Color)</h3>
+        <h4>This is a very @Model.Characteristics.ToLower() pet and it has @Model.Coat.ToString().ToLower() hair.</h4>
+        <h5>Its price is @Model.Price lv. and for more information you can contact 
+            <a href="mailto:@Model.ContactInformation">@Model.ContactInformation</a>
+        <br />
+        <br />
+            <a class="btn btn-info pull-right" href="/Pets/All?user=@(Model.ContactInformation)">See User's Pets</a>
+        </h5>
+        <br />
+        <span class="row">
+            @Html.ActionLink("Back", "All", "Pets", null, new { @class = "btn btn-default pull-right" })
+            @if (Model.ContactInformation == User.Identity.Name)
+            {
+                <a class="btn btn-danger pull-right" href="/Pets/Delete?Id=@(Model.Id)">Delete</a>
+                <a class="btn btn-success pull-right" href="/Pets/Edit?Id=@(Model.Id)">Edit</a>
+            }
+        </span>
+        <br />
+        <br />
+        <br />
+        <br />
+        @if (Model.ContactInformation != User.Identity.Name)
+        {
+            using (Html.BeginForm("Buy", "Pets", FormMethod.Get))
+            {
+                @Html.Hidden("PetId", Model.Id)
+                <span>Buy this addorable pet with just one click -> </span>
+                <input type="submit" class="btn btn-success @(Model.IsBought ? "disabled" : string.Empty)" value="Buy!" />
+            }
+        }
+    </div>
+</div>

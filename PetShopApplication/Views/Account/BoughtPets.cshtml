@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PetShopApplication.Models.Buying.BoughtPetsModel>
+
+<h2 class="text-center">My Bought Pets</h2>
+
+<table class="table table-bordered table-responsive table-striped table-hover">
+    <tr>
+        <th class="text-center">
+            Date
+        </th>
+        <th class="text-center">
+            Name
+        </th>
+        <th class="text-center">
+            Price
+        </th>
+    </tr>
+    @foreach (var boughtPet in Model)
+    {
+        <tr>
+            <td class="text-center">
+                @boughtPet.BoughtOn.ToString("dd/MM/yyyy")
+            </td>
+            <td class="text-center">
+                @boughtPet.PetName
+                <img class="img-thumbnail" style="width:150px" src="@boughtPet.PetImageUrl"/>
+            </td>
+            <td class="text-center">
+                @boughtPet.Price BGN
+            </td>
+        </tr>
+    }
+</table>

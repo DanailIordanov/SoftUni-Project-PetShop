@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PetShopApplication.Models.Pets.ListingPetModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">Pet Shop</h1>
+    <p class="lead text-center">Best Prices for the Cuttest Pets on the Planet!</p>
+    <p class="text-center">
+        <a href="/Pets/Create" class="btn btn-primary btn-lg">Add Yours</a>
+        <a href="/Pets/All" class="btn btn-primary btn-lg">Take a Look</a>
+    </p>
+</div>
+
+<div class="row">
+    @foreach (var pet in Model)
+    {
+        <div class="col-md-4">
+            <h2>@pet.Name, @pet.Age (@pet.Breed)</h2>
+            <a class="btn btn-default" href="/Pets/Details/@pet.Id">
+                <img src="@pet.ImageUrl" class="image img-responsive" />
+            </a>
+        </div>
+    }
+</div>

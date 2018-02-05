@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PetShopApplication.Models.Pets.ListingPetModel>
+
+@{
+    ViewBag.Title = "Catalogue";
+}
+
+@using (Html.BeginForm("All", "Pets", FormMethod.Get))
+{
+    if(Request.QueryString["user"] != null)
+    {
+        @Html.Hidden("user", Request.QueryString["user"])
+    }
+    <div class="row mt-60">
+        <span class="pull-right"><input type="submit" value="Search" class="btn btn-default" /></span>
+        <span class="pull-right col-md-3"><input type="text" class="form-control" name="search" style="display: inline-block" value="@Request.QueryString["search"]" /></span>
+        </div>
+}
+
+<h2 class="text-center mt-60">Pets Catalogue - Page @ViewBag.CurrentPage</h2>
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">No more pet articles!</h2>
+}
+
+
+@foreach (var pet in Model)
+{
+    <div class="row mt-60">
+        <div class="col-md-6">
+            <img src="@pet.ImageUrl" class="img-responsive" @(pet.IsBought ? "style=opacity:0.5" : string.Empty) />
+        </div>
+        <div class="col-md-6">
+            <h2>@pet.Name, @pet.Age (@pet.Breed)</h2>
+            <h4 style="color:@(pet.IsBought ? "red" : "black")">@pet.Price BGN</h4>
+            <a href="/Pets/Details/@pet.Id" class="btn @(pet.IsBought ? "btn-default" : "btn-primary")">@(pet.IsBought ? "This pet is already bought" : "See More")</a>
+        </div>
+    </div>
+}
+@{
+    var currentUser = Request.QueryString["user"];
+    var currentSearch = Request.QueryString["search"];
+
+    var currentUserQuery = currentUser != null ? "&user=" + currentUser : string.Empty;
+    var currentSearchQuery = currentSearch != null ? "&search=" + currentSearch : string.Empty;
+}
+<p class="text-center mt-60">
+    <a href="/Pets/All?page=@(ViewBag.CurrentPage - 1)@currentUserQuery@currentSearchQuery" class="btn btn-primary cpn @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)">Previous</a>
+    <a href="/Pets/All?page=@(ViewBag.CurrentPage + 1)@currentUserQuery@currentSearchQuery" class="btn btn-primary cpn @(!Model.Any() || Model.Count() < 4 ? "disabled" : string.Empty)">Next</a>
+</p>

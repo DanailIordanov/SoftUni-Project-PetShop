@@ -1,0 +1,23 @@
+﻿@model PetShopApplication.Models.CreatePetModel
+
+@{
+    ViewBag.Title = "Add New Pet";
+}
+
+@using (Html.BeginForm("Create", "Pets", FormMethod.Post))
+{
+    @Html.EditorForModel()
+
+    <div>
+        @Html.LabelFor(m => m.Coat)
+    </div>
+    <div>
+        @Html.EnumDropDownListFor(m => m.Coat);
+    </div>
+
+    <br />
+    <div>
+        <input type="submit" value="Save Pet" />
+    </div>
+
+}
